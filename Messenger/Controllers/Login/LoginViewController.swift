@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import JGProgressHUD
 
 class LoginViewController: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -131,11 +136,47 @@ class LoginViewController: UIViewController {
     
     @objc private func loginButtonTapped() {
         
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        
         guard let email = emailField.text , let password = passwordField.text,
               !email.isEmpty, !password.isEmpty , password.count >= 6 else{
             alertUserLoginError()
             return
         }
+        
+        
+        spinner.show(in: view)
+        
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authresult , error in
+            
+            guard let strongSelf  = self else{
+                return
+            }
+            
+            DispatchQueue.main.async{
+                self?.spinner.dismiss()
+            }
+            
+
+            
+            guard let result = authresult, error == nil else{
+                print("Failed to log in user with email: \(email)")
+                strongSelf.navigationController?.dismiss(animated: true , completion: nil)
+                return
+            }
+            
+            let user = result.user
+            print("Logged in user: \(user)")
+            strongSelf.navigationController?.dismiss(animated: true,completion: nil)
+            
+            
+            
+        })
+        
+        
+        
+        
     }
     
     func alertUserLoginError(){

@@ -6,24 +6,67 @@
 //
 
 import UIKit
+import MessageKit
 
-class ChatViewController: UIViewController {
+struct Message:MessageType{
+    var sender: SenderType
+    var messageId: String
+    var sentDate: Date
+    var kind: MessageKind
+}
 
+struct Sender:SenderType{
+    var photURL : String
+    var senderId: String
+    var displayName: String
+}
+
+
+
+class ChatViewController: MessagesViewController {
+
+    private var messages = [Message]()
+    
+    private let selfSender = Sender(photURL: "",
+                                    senderId: "1",
+                                    displayName: "Joe Smith")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        messages.append(Message(sender: selfSender,
+                                messageId: "1",
+                                sentDate: Date(),
+                                kind: .text("Hello Wolrld Message")))
+        
+        messages.append(Message(sender: selfSender,
+                                messageId: "1",
+                                sentDate: Date(),
+                                kind: .text("Hello Wolrld Message")))
+        
+        view.backgroundColor = .red
+        
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+        
+        messagesCollectionView.reloadData()
+    }
+}
 
-        // Do any additional setup after loading the view.
+
+extension ChatViewController : MessagesDataSource , MessagesLayoutDelegate , MessagesDisplayDelegate{
+    var currentSender: MessageKit.SenderType {
+        return selfSender
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessageKit.MessagesCollectionView) -> MessageKit.MessageType {
+        return messages[indexPath.section]
     }
-    */
-
+    
+    func numberOfSections(in messagesCollectionView: MessageKit.MessagesCollectionView) -> Int {
+        return messages.count
+    }
+    
+    
 }

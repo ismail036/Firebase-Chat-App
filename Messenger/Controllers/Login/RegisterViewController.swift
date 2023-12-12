@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
 
 class RegisterViewController: UIViewController, UINavigationControllerDelegate {
+    
+    private let spinner = JGProgressHUD(style: .dark)
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
@@ -16,7 +21,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person")
+        imageView.image = UIImage(systemName: "person.circle")
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
@@ -119,10 +124,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         title = "Create Account"
         view.backgroundColor = .white
         
-        navigationItem.rightBarButtonItem   = UIBarButtonItem(title: "Register",
-                                                              style: .done,
-                                                              target: self,
-                                                              action: #selector(didTapRegister))
+       
         
         registerButton.addTarget(self,
                               action: #selector(registerButtonTapped),
@@ -212,11 +214,48 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
             alertUserLoginError()
             return
         }
+        
+        spinner.show(in: view)
+        
+        DatabaseMenager.shared.userExists(with: email, comletion: {
+            [weak self] exists in guard !exists else{
+                return
+            }
+        })
+        
+        spinner.show(in: view)
+        
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password,completion: { [weak self] authResult,error in
+            guard let strongSelf = self else {
+                return
+            }
+            
+      
+            
+            DispatchQueue.main.async{
+                self?.spinner.dismiss()
+            }
+            
+            guard let result = authResult ,  error == nil else{
+                print("Error creating user")
+                return
+            }
+            
+            DatabaseMenager.shared.insertUser(with: ChatAppUser(firstName: firstName,
+                                                                lastName: lastName,
+                                                                emailAddress: email
+            ))
+            
+            strongSelf.navigationController?.dismiss(animated: true , completion: nil)
+            
+        })
+        
+        
     }
     
     func alertUserLoginError(){
         let alert = UIAlertController(title: "Woops",
-                                      message: "Please enter all create a new account.",
+                                      message: "Please enter all information to create a new account.",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss",
                                       style: .cancel,
