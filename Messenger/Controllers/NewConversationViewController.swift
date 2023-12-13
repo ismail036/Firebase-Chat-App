@@ -45,6 +45,7 @@ class NewConversationViewController: UIViewController {
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(dismisSelf))
+        seacthBar.becomeFirstResponder()
         
     }
     

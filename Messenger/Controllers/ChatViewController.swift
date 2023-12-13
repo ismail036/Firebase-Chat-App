@@ -23,6 +23,7 @@ struct Sender:SenderType{
 
 
 
+
 class ChatViewController: MessagesViewController {
 
     private var messages = [Message]()
@@ -37,12 +38,12 @@ class ChatViewController: MessagesViewController {
         messages.append(Message(sender: selfSender,
                                 messageId: "1",
                                 sentDate: Date(),
-                                kind: .text("Hello Wolrld Message")))
+                                kind: .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")))
         
         messages.append(Message(sender: selfSender,
                                 messageId: "1",
                                 sentDate: Date(),
-                                kind: .text("Hello Wolrld Message")))
+                                kind: .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis erat mollis augue vulputate commodo.")))
         
         view.backgroundColor = .red
         
@@ -67,6 +68,4 @@ extension ChatViewController : MessagesDataSource , MessagesLayoutDelegate , Mes
     func numberOfSections(in messagesCollectionView: MessageKit.MessagesCollectionView) -> Int {
         return messages.count
     }
-    
-    
 }

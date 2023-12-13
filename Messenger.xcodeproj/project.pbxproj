@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A14ADF62B2A208800420A36 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A14ADF52B2A208800420A36 /* StorageManager.swift */; };
 		5A92F4DC2B28B189008C16AD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A92F4DB2B28B189008C16AD /* ProfileViewController.swift */; };
 		5A92F4DE2B28F0CB008C16AD /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A92F4DD2B28F0CB008C16AD /* ChatViewController.swift */; };
 		5A976F5A2B278D90000F839E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5A976F592B278D90000F839E /* FirebaseAnalytics */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5A14ADF52B2A208800420A36 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		5A92F4DB2B28B189008C16AD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5A92F4DD2B28F0CB008C16AD /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		5A976F922B2790EB000F839E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				5AD021912B2734DD00463E64 /* SceneDelegate.swift */,
 				5AD021B42B274B8A00463E64 /* Resources.swift */,
 				5A976F942B27BF8D000F839E /* DatabaseMenager.swift */,
+				5A14ADF52B2A208800420A36 /* StorageManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				5AD021922B2734DD00463E64 /* SceneDelegate.swift in Sources */,
 				5A92F4DE2B28F0CB008C16AD /* ChatViewController.swift in Sources */,
 				5AD021AE2B273B4900463E64 /* PhotoViewerViewController.swift in Sources */,
+				5A14ADF62B2A208800420A36 /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
